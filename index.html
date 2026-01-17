@@ -25,6 +25,46 @@
     footer{max-width:1100px;margin:auto;padding:18px;color:#8f95a3;font-size:13px}
   </style>
 </head>
+<!-- Modal para ver imagen completa -->
+<div id="imgModal" style="
+  position:fixed; inset:0; display:none; align-items:center; justify-content:center;
+  background:rgba(0,0,0,.82); z-index:9999; padding:18px;
+">
+  <img id="imgModalPhoto" alt="" style="
+    max-width:95vw; max-height:92vh; border-radius:14px; border:1px solid #2a2f3a;
+    box-shadow: 0 20px 60px rgba(0,0,0,.5);
+  ">
+</div>
+
+<script>
+  // Lightbox básico
+  const modal = document.getElementById("imgModal");
+  const modalImg = document.getElementById("imgModalPhoto");
+
+  // Abre al hacer click en cualquier imagen zoomable
+  document.addEventListener("click", (e) => {
+    const img = e.target.closest("img.zoomable");
+    if (!img) return;
+    modalImg.src = img.src;
+    modalImg.alt = img.alt || "";
+    modal.style.display = "flex";
+  });
+
+  // Cierra con click afuera
+  modal.addEventListener("click", () => {
+    modal.style.display = "none";
+    modalImg.src = "";
+  });
+
+  // Cierra con ESC
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      modal.style.display = "none";
+      modalImg.src = "";
+    }
+  });
+</script>
+
 <body>
 <header>
   <h1>Catálogo de productos | Grabado Láser</h1>
@@ -140,7 +180,7 @@
 
     grid.innerHTML = filtered.map(p => `
       <article class="card">
-        <img src="${p.img}" alt="${p.name}" loading="lazy">
+        <img class="zoomable" src="${p.img}" alt="${p.name}" loading="lazy">
         <div class="content">
           <p class="name">${p.name}</p>
           <p class="meta">${p.material}</p>
@@ -166,6 +206,7 @@
 </script>
 </body>
 </html>
+
 
 
 
