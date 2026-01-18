@@ -40,6 +40,8 @@
   // Lightbox básico
   const modal = document.getElementById("imgModal");
   const modalImg = document.getElementById("imgModalPhoto");
+  const SHOW_WHATSAPP = false; // cambia a true cuando quieras que aparezca
+
 
   // Abre al hacer click en cualquier imagen zoomable
   document.addEventListener("click", (e) => {
@@ -187,10 +189,12 @@
           <p class="meta">${p.note || ""}</p>
           <span class="tag">${p.category}</span>
 
-          <div class="btns">
-            <!-- Cambia TU_NUMERO por tu WhatsApp (formato internacional, sin +, ej 521492xxxxxxx) -->
-            <a class="btn" href="https://wa.me/TU_NUMERO?text=${encodeURIComponent("Hola, me interesa: " + p.name)}" target="_blank" rel="noopener">WhatsApp</a>
-          </div>
+          ${SHOW_WHATSAPP ? `
+            <div class="btns">
+              <!-- Cambia TU_NUMERO por tu WhatsApp (formato internacional, sin +, ej 521492xxxxxxx) -->
+              <a class="btn" href="https://wa.me/TU_NUMERO?text=${encodeURIComponent("Hola, me interesa: " + p.name)}" target="_blank" rel="noopener">WhatsApp</a>
+            </div>
+          ` : ``}
         </div>
       </article>
     `).join("");
@@ -206,6 +210,7 @@
 </script>
 </body>
 </html>
+
 
 
 
